@@ -2,6 +2,7 @@
 set nocompatible
 set softtabstop=2
 set shiftwidth=4
+set scrolloff=999  "to keep the cursor vertical centered
 syntax on
 filetype indent on
 set autoindent
@@ -21,9 +22,23 @@ set wildmenu
 set directory=$HOME/.vim/swp// " save all the .swp files in this directory 
 set undofile " mantain undo history between sessions
 set undodir=$HOME/.vim/undodir " save all the undo history hidden files in this directory
+set whichwrap=<,>,h,l "go to the next line if reach the end of a line 
 nnoremap n nzz 
 "fissa la riga al centro della pagina quando si usa n
 nnoremap N Nzz
 "fissa la riga al centro della pagina quando si usa N
 map <C-K> :bprev!<CR>
+"prossimo buffer
 map <C-J> :bnext!<CR>
+"precedente buffer
+inoremap { {<cr>}<C-o>O
+inoremap ( ()<left>
+inoremap [ []<left>
+"
+"
+"
+"
+inoremap <C-]> <C-o>vG:s/\%V[\)\]\}]//gc<cr>q<C-o>l
+"move cursor at the end of the next parentheses [dependency with whichwrap]
+inoremap <C-[> <C-o>vggo<left>:s/\%V[\)\]\}]//gc<cr>q<C-o>:norm<space>GN<cr>
+"move cursor at before the previous parentheses [dependency with whichwrap]
