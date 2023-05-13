@@ -1,3 +1,5 @@
+
+
 "filetype plugin on
 set nocompatible
 set softtabstop=2
@@ -13,6 +15,7 @@ set foldmethod=indent
 set foldcolumn=2
 set nobackup
 colorscheme elflord
+set guifont=Cascadia_Code:h9
 set cursorline
 "highlight CursorLine guibg=orange ctermbg=lightgrey
 set nu
@@ -36,11 +39,15 @@ inoremap <BS> <left><DEL>
 inoremap { {<cr>}<C-o>O
 inoremap ( ()<left>
 inoremap [ []<left>
-"
-"
-"
-"
-inoremap <C-]> <left><C-o>l<C-o>vG:s/\%V[\)\]\}]//gc<cr>q<C-o>a
+
+inoremap <C-}> <left><C-o>l<C-o>:call<space>search('[\])}]','cW')<return><C-o>a
 "move cursor at the end of the next parentheses [dependency with whichwrap:]
-inoremap <C-[> <left><C-o>vgg:s/\%V[\)\]\}]//gc<cr>q<C-o>:norm<space>GN<cr>
+
+inoremap <C-{> <left><C-o>:call<space>GoToThePrevParentheses()<return>
 "move cursor at before the previous parentheses [dependency with whichwrap]
+
+
+function GoToThePrevParentheses()
+  :s/\(^[\])}]\)/ \1/e
+  return search('[\])}]','bcWp')
+endfunction
